@@ -14,7 +14,7 @@ function Chat() {
 
             // ws.send("Hey, how is it going?")
         })
-    }, [])
+    }, [ws])
 
 
     function handleChange(e) {
@@ -41,7 +41,7 @@ function Chat() {
                 {msgHistory.length > 0 ?
                     <ul>
                         {msgHistory.map((element) => {
-                            <li>{element}</li>
+                            return <li>{element}</li>
                         })}
                     </ul> : <p>... no messages ...</p>}
                 <form onSubmit={handleSubmit}>
