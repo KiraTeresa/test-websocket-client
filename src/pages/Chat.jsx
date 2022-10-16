@@ -14,7 +14,7 @@ function Chat() {
 
             // ws.send("Hey, how is it going?")
         })
-    }, [ws])
+    }, [])
 
 
     function handleChange(e) {
