@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 
 function Chat() {
     const [message, setMessage] = useState('')
     const [msgHistory, setMsgHistory] = useState([])
-    const ws = new WebSocket("ws://localhost:8082")
+    const ws = useMemo(() => new WebSocket("ws://localhost:8082"), [])
     // const newMessage = {author: "currentUserId", msg: "", time: new Date()}
 
     useEffect(() => {
@@ -14,7 +14,7 @@ function Chat() {
 
             // ws.send("Hey, how is it going?")
         })
-    }, [])
+    }, [ws])
 
 
     function handleChange(e) {
@@ -26,6 +26,7 @@ function Chat() {
         e.preventDefault()
         ws.send(message)
         console.log("Message sent")
+        setMessage("")
     }
 
 
@@ -40,12 +41,12 @@ function Chat() {
             <div>
                 {msgHistory.length > 0 ?
                     <ul>
-                        {msgHistory.map((element) => {
-                            return <li>{element}</li>
+                        {msgHistory.map((element, index) => {
+                            return <li key={index} >{element}</li>
                         })}
                     </ul> : <p>... no messages ...</p>}
                 <form onSubmit={handleSubmit}>
-                    <input type="text" name="msg" onChange={handleChange}></input>
+                    <input type="text" name="msg" onChange={handleChange} value={message}></input>
                     <button>send msg</button>
                 </form>
             </div>
